@@ -16,6 +16,7 @@
       color: #fff;
       padding: 20px;
       text-align: center;
+      position: relative;
     }
     nav {
       background-color: #333;
@@ -42,13 +43,15 @@
     }
     .lang-switch {
       position: absolute;
-      right: 20px;
       top: 20px;
+      right: 20px;
     }
-    .lang-switch a {
+    .lang-switch button {
+      background: none;
+      border: none;
       color: white;
-      margin-left: 10px;
-      text-decoration: none;
+      cursor: pointer;
+      font-size: 16px;
     }
     footer {
       background-color: #222;
@@ -58,29 +61,46 @@
       margin-top: 40px;
     }
   </style>
+  <script>
+    function switchLanguage(lang) {
+      const zhElements = document.querySelectorAll('.zh');
+      const enElements = document.querySelectorAll('.en');
+      zhElements.forEach(el => el.style.display = (lang === 'zh') ? 'block' : 'none');
+      enElements.forEach(el => el.style.display = (lang === 'en') ? 'block' : 'none');
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      switchLanguage('zh'); // 預設中文
+    });
+  </script>
 </head>
 <body>
   <header>
     <img src="tianhe_logo.png" alt="天禾 LOGO" class="logo">
-    <h1>天禾論壇</h1>
-    <p>Tian He Forum</p>
+    <h1>天禾論壇 / Tian He Forum</h1>
     <div class="lang-switch">
-      <a href="index.html">中文</a> | 
-      <a href="index_en.html">English</a>
+      <button onclick="switchLanguage('zh')">中文</button> |
+      <button onclick="switchLanguage('en')">English</button>
     </div>
   </header>
 
   <nav>
-    <a href="index.html">主頁</a>
-    <a href="about.html">關於我們</a>
-    <a href="wott.html">《WOTT》</a>
+    <a href="index.html">🏠 主頁 / Home</a>
+    <a href="about.html">👤 關於我們 / About</a>
+    <a href="wott.html">🎮 《WOTT》</a>
   </nav>
 
   <div class="container">
-    <h2>歡迎來到天禾論壇</h2>
-    <p>這裡是天禾工作室的官方網站，我們致力於打造極致的遊戲體驗。</p>
+    <div class="zh">
+      <h2>歡迎來到天禾論壇</h2>
+      <p>這裡是天禾工作室的官方網站，我們致力於打造極致的遊戲體驗。</p>
+      <p>《WOTT》是一款正在開發中的次世代手機遊戲，支援 Android 與 iOS 平台。</p>
+    </div>
+    <div class="en" style="display:none">
+      <h2>Welcome to Tian He Forum</h2>
+      <p>This is the official website of Tian He Studio. We are committed to creating the ultimate gaming experience.</p>
+      <p>WOTT is a next-gen mobile game under development, supporting both Android and iOS platforms.</p>
+    </div>
     <img src="WOTT_logo.png" alt="WOTT LOGO" class="logo" style="max-width:200px;">
-    <p>《WOTT》是一款正在開發中的次世代手機遊戲，支援 Android 與 iOS。</p>
   </div>
 
   <footer>
