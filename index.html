@@ -54,6 +54,16 @@
       margin-left: auto;
       margin-right: auto;
     }
+    .lang-switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    .lang-switch a {
+      color: white;
+      margin-left: 10px;
+      text-decoration: none;
+    }
     footer {
       background-color: #222;
       color: white;
@@ -67,6 +77,10 @@
   <header>
     <img src="天禾工作室官方logo.png" alt="天禾 LOGO" class="logo">
     <h1>天禾論壇 | Tian He Forum</h1>
+    <div class="lang-switch">
+      <a href="#zh">中文</a> | 
+      <a href="#en">English</a>
+    </div>
   </header>
 
   <nav>
@@ -76,9 +90,12 @@
   </nav>
 
   <div class="container">
-    <div class="section">
+    <div class="section" id="zh">
       <h2>歡迎來到天禾論壇</h2>
       <p>這裡是天禾工作室的官方網站，我們致力於打造極致的遊戲體驗。</p>
+    </div>
+
+    <div class="section" id="en">
       <h2>Welcome to Tian He Forum</h2>
       <p>This is the official website of Tian He Studio. We are dedicated to creating the ultimate gaming experience.</p>
     </div>
