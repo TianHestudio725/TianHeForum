@@ -13,9 +13,32 @@
     .container { padding: 30px; max-width: 800px; margin: auto; background: white; }
     .lang-switch { text-align: right; padding: 10px 20px; background-color: #eee; }
     .lang-switch button { margin-left: 10px; }
+
+    /* 靜音按鈕樣式 */
+    #mute-btn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 9999;
+      padding: 10px 15px;
+      background: #222;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #mute-btn:hover {
+      background: #444;
+    }
   </style>
 </head>
 <body>
+  <!-- 靜音按鈕 -->
+  <button id="mute-btn">🔊</button>
+
+  <!-- 背景音樂播放器（隱藏） -->
+  <iframe src="player.html" id="bgm-player" style="display: none;"></iframe>
+
   <header>
     <img src="天禾工作室官方logo.png" alt="天禾 LOGO" style="max-height: 100px;">
     <h1 id="title">關於我們</h1>
@@ -56,6 +79,18 @@
       document.getElementById('en').style.display = lang === 'en' ? 'block' : 'none';
       document.getElementById('title').textContent = lang === 'zh' ? '關於我們' : 'About Us';
     }
+
+    const muteBtn = document.getElementById("mute-btn");
+    muteBtn.onclick = () => {
+      const iframe = document.getElementById("bgm-player");
+      iframe.contentWindow.postMessage({ type: "toggle-bgm" }, "*");
+    };
+
+    window.addEventListener("message", (event) => {
+      if (event.data && event.data.type === "bgm-status") {
+        muteBtn.textContent = event.data.muted ? "🔇" : "🔊";
+      }
+    });
   </script>
 </body>
 </html>
