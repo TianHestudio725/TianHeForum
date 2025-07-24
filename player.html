@@ -2,42 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Music Player</title>
+  <title>BGM Player</title>
   <style>
     body {
       margin: 0;
       background: transparent;
     }
-    #muteBtn {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      color: gold;
-      z-index: 9999;
+    audio {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <button id="muteBtn" title="Mute/Unmute">🔊</button>
-  <audio id="bgm" src="bgm.mp3" autoplay loop></audio>
+  <audio id="bgm" autoplay loop>
+    <source src="bgm.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
 
   <script>
-    const audio = document.getElementById("bgm");
-    const btn = document.getElementById("muteBtn");
+    const bgm = document.getElementById("bgm");
 
-    // 啟用自動播放
-    audio.volume = 0.6;
-    audio.play().catch(() => {
-      // 某些瀏覽器需要互動才能播放
-    });
+    // 預設靜音狀態（可改為 false）
+    bgm.muted = false;
 
-    btn.addEventListener("click", () => {
-      audio.muted = !audio.muted;
-      btn.textContent = audio.muted ? "🔇" : "🔊";
+    // 儲存播放狀態（跨頁面持久）
+    const savedMute = localStorage.getItem("bgm-muted");
+    if (savedMute === "true") bgm.muted = true;
+
+    window.addEventListener("message", (e) => {
+      if (e.data === "toggle-bgm") {
+        bgm.muted = !bgm.muted;
+        localStorage.setItem("bgm-muted", bgm.muted);
+      }
     });
   </script>
 </body>
