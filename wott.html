@@ -23,13 +23,32 @@
       font-size: 16px;
       margin-top: 20px;
     }
+    .mute-button {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background-color: #444;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 999;
+      transition: background-color 0.3s;
+    }
+    .mute-button:hover {
+      background-color: #666;
+    }
   </style>
 </head>
 <body>
+
   <header>
     <img src="WOTT官方logo.png" alt="WOTT LOGO" class="logo">
     <h1 id="title">《WOTT》</h1>
   </header>
+
+  <button class="mute-button" onclick="toggleMute()">🔊</button>
 
   <div class="lang-switch">
     <strong>語言 / Language:</strong>
@@ -60,12 +79,32 @@
     © 2025 天禾工作室 | Tian He Studio
   </footer>
 
+  <!-- 背景音樂 -->
+  <audio id="bgm" src="music/bgm.mp3" loop autoplay></audio>
+
   <script>
     function setLanguage(lang) {
       document.getElementById('zh').style.display = lang === 'zh' ? 'block' : 'none';
       document.getElementById('en').style.display = lang === 'en' ? 'block' : 'none';
       document.getElementById('title').textContent = lang === 'zh' ? '《WOTT》' : 'WOTT';
     }
+
+    const audio = document.getElementById('bgm');
+    const button = document.querySelector('.mute-button');
+
+    function toggleMute() {
+      audio.muted = !audio.muted;
+      button.innerText = audio.muted ? "🔇" : "🔊";
+      localStorage.setItem("bgmMuted", audio.muted);
+    }
+
+    // 在切頁時保持靜音狀態
+    window.addEventListener('DOMContentLoaded', () => {
+      const isMuted = localStorage.getItem("bgmMuted") === "true";
+      audio.muted = isMuted;
+      button.innerText = isMuted ? "🔇" : "🔊";
+    });
   </script>
+
 </body>
 </html>
