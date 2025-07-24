@@ -1,39 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>BGM Player</title>
+  <meta charset="UTF-8">
+  <title>WOTT 背景音樂播放器</title>
   <style>
     body {
       margin: 0;
       background: transparent;
     }
-    audio {
-      display: none;
+    #mute-toggle {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 24px;
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 5px 10px;
     }
   </style>
 </head>
 <body>
-  <audio id="bgm" autoplay loop>
-    <source src="bgm.mp3" type="audio/mpeg" />
-    Your browser does not support the audio element.
+  <!-- 靜音按鈕 -->
+  <button id="mute-toggle">🔊</button>
+
+  <!-- 背景音樂播放器 -->
+  <audio id="bgm-player" autoplay loop>
+    <source src="bgm.mp3" type="audio/mpeg">
+    您的瀏覽器不支援 audio 元素。
   </audio>
 
   <script>
-    const bgm = document.getElementById("bgm");
+    const player = document.getElementById('bgm-player');
+    const button = document.getElementById('mute-toggle');
 
-    // 預設靜音狀態（可改為 false）
-    bgm.muted = false;
+    // 有些瀏覽器禁止自動播放，必須用 JS 主動播放
+    window.addEventListener('DOMContentLoaded', () => {
+      player.play().catch(() => {
+        console.log("需使用者互動才可播放");
+      });
+    });
 
-    // 儲存播放狀態（跨頁面持久）
-    const savedMute = localStorage.getItem("bgm-muted");
-    if (savedMute === "true") bgm.muted = true;
-
-    window.addEventListener("message", (e) => {
-      if (e.data === "toggle-bgm") {
-        bgm.muted = !bgm.muted;
-        localStorage.setItem("bgm-muted", bgm.muted);
-      }
+    let muted = false;
+    button.addEventListener('click', () => {
+      muted = !muted;
+      player.muted = muted;
+      button.textContent = muted ? '🔇' : '🔊';
     });
   </script>
 </body>
