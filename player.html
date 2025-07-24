@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Music Player</title>
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+    }
+    #muteBtn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: gold;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <button id="muteBtn" title="Mute/Unmute">🔊</button>
+  <audio id="bgm" src="bgm.mp3" autoplay loop></audio>
+
+  <script>
+    const audio = document.getElementById("bgm");
+    const btn = document.getElementById("muteBtn");
+
+    // 啟用自動播放
+    audio.volume = 0.6;
+    audio.play().catch(() => {
+      // 某些瀏覽器需要互動才能播放
+    });
+
+    btn.addEventListener("click", () => {
+      audio.muted = !audio.muted;
+      btn.textContent = audio.muted ? "🔇" : "🔊";
+    });
+  </script>
+</body>
+</html>
