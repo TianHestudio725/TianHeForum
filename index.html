@@ -20,7 +20,62 @@
                 linear-gradient(rgba(50, 10, 0, 0.2), rgba(50, 10, 0, 0.2));
         }
 
-        /* 明显子弹痕迹样式 */
+        /* 內容容器 */
+        .content-wrapper {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 縮小後的LOGO樣式 */
+        .logo-container {
+            margin: 20px 0;
+        }
+
+        .tianhe-logo, .wott-logo {
+            width: 180px;
+            height: auto;
+            margin: 10px;
+            transition: transform 0.3s;
+        }
+
+        .tianhe-logo:hover, .wott-logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* 縮小後的公告區域 */
+        .announcement {
+            background-color: rgba(20, 20, 20, 0.7);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            box-shadow: 0 0 15px rgba(255, 100, 0, 0.3);
+        }
+
+        .announcement h2 {
+            color: #ff6600;
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+
+        .announcement p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* 頁腳 */
+        .footer {
+            margin-top: 30px;
+            padding: 15px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* 強化子彈痕跡 */
         .bullet-hole {
             position: fixed;
             pointer-events: none;
@@ -33,24 +88,37 @@
                 rgba(20, 20, 20, 1) 100%);
             border-radius: 50%;
             box-shadow: 
-                0 0 5px rgba(255, 100, 0, 0.8),
-                inset 0 0 10px rgba(0, 0, 0, 0.8);
+                0 0 8px rgba(255, 100, 0, 0.9),
+                inset 0 0 15px rgba(0, 0, 0, 0.9);
             animation: bullet-impact 0.3s ease-out forwards;
         }
 
-        /* 子弹撞击火花 */
+        /* 強化撞擊火花 */
         .bullet-spark {
             position: fixed;
             pointer-events: none;
             z-index: 6;
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             background: radial-gradient(circle, 
-                rgba(255, 200, 0, 0.9) 0%, 
-                rgba(255, 100, 0, 0.8) 100%);
+                rgba(255, 230, 0, 0.9) 0%, 
+                rgba(255, 80, 0, 0.8) 100%);
             border-radius: 50%;
-            filter: blur(1px);
+            filter: blur(1.5px);
             animation: spark-fade 0.5s ease-out forwards;
+        }
+
+        /* 新增子彈軌跡線 */
+        .bullet-trace {
+            position: fixed;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                rgba(255,100,0,0.9) 0%, 
+                rgba(255,200,0,0.7) 50%, 
+                transparent 100%);
+            transform-origin: left center;
+            animation: trace-fade 0.6s ease-out forwards;
+            z-index: 4;
         }
 
         @keyframes bullet-impact {
@@ -64,11 +132,15 @@
             100% { transform: scale(3); opacity: 0; }
         }
 
-        /* 其他样式保持不变... */
+        @keyframes trace-fade {
+            0% { width: 0; opacity: 1; }
+            50% { width: 150px; opacity: 0.8; }
+            100% { width: 300px; opacity: 0; }
+        }
     </style>
 </head>
 <body>
-    <!-- 内容容器 -->
+    <!-- 內容容器 -->
     <div class="content-wrapper">
         <div class="logo-container">
             <img src="天禾工作室官方logo.png" alt="天禾工作室" class="tianhe-logo">
@@ -86,52 +158,70 @@
     </div>
 
     <script>
-        // 创建明显子弹痕迹
+        // 創建強化子彈效果
         function createBulletHole() {
-            // 随机位置
+            // 隨機位置
             const x = Math.random() * window.innerWidth;
             const y = Math.random() * window.innerHeight;
             
-            // 创建子弹孔
+            // 創建子彈孔
             const hole = document.createElement('div');
             hole.className = 'bullet-hole';
             hole.style.left = `${x}px`;
             hole.style.top = `${y}px`;
             document.body.appendChild(hole);
             
-            // 创建撞击火花
+            // 創建撞擊火花
             const spark = document.createElement('div');
             spark.className = 'bullet-spark';
             spark.style.left = `${x}px`;
             spark.style.top = `${y}px`;
             document.body.appendChild(spark);
             
-            // 5秒后移除
+            // 創建軌跡線（隨機角度）
+            if(Math.random() > 0.3) {
+                const trace = document.createElement('div');
+                trace.className = 'bullet-trace';
+                trace.style.left = `${x}px`;
+                trace.style.top = `${y}px`;
+                const angle = Math.random() * 360;
+                trace.style.transform = `rotate(${angle}deg)`;
+                document.body.appendChild(trace);
+                
+                setTimeout(() => {
+                    trace.remove();
+                }, 600);
+            }
+            
+            // 5秒後移除
             setTimeout(() => {
                 hole.remove();
                 spark.remove();
             }, 5000);
         }
 
-        // 初始化子弹痕迹
+        // 初始化子彈效果
         function initBulletHoles() {
-            // 立即创建3个子弹痕迹
-            for (let i = 0; i < 3; i++) {
-                setTimeout(createBulletHole, i * 300);
+            // 初始創建5個強化效果
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    createBulletHole();
+                    // 50%機率創建第二組效果
+                    if(Math.random() > 0.5) {
+                        setTimeout(createBulletHole, 200);
+                    }
+                }, i * 400);
             }
             
-            // 每2秒创建一个新痕迹
+            // 每1.5秒創建新效果
             setInterval(() => {
                 createBulletHole();
-            }, 2000);
+            }, 1500);
         }
 
-        // 页面加载时初始化
+        // 頁面加載時初始化
         window.addEventListener('load', () => {
             initBulletHoles();
-            
-            // 初始化爆炸特效（如果保留）
-            // initEffects();
         });
     </script>
 </body>
