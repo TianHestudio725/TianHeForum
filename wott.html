@@ -1,110 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>《WOTT》 - 天禾論壇</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
-    header, footer { background-color: #222; color: white; text-align: center; padding: 20px; }
-    nav { background-color: #333; display: flex; justify-content: center; flex-wrap: wrap; }
-    nav a { color: white; padding: 14px 20px; text-decoration: none; }
-    nav a:hover { background-color: #575757; }
-    .container { padding: 30px; max-width: 800px; margin: auto; background: white; }
-    .logo { max-width: 200px; margin: 20px auto; display: block; }
-    .lang-switch { text-align: right; padding: 10px 20px; background-color: #eee; }
-    .lang-switch button { margin-left: 10px; }
-    .download-btn {
-      padding: 10px 20px;
-      background-color: #555;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 20px;
-    }
-    .mute-button {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      background-color: #444;
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      z-index: 999;
-      transition: background-color 0.3s;
-    }
-    .mute-button:hover {
-      background-color: #666;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <title>WOTT 遊戲介紹</title>
 </head>
-<body>
+<body style="margin: 0; padding: 0; font-family: sans-serif; background-color: #111; color: #fff; text-align: center;">
+  <h1 style="margin-top: 100px;">WOTT 遊戲介紹</h1>
+  <p>準備好加入戰場了嗎？WOTT 是一款多人第一人稱射擊遊戲。</p>
 
-  <header>
-    <img src="WOTT官方logo.png" alt="WOTT LOGO" class="logo">
-    <h1 id="title">《WOTT》</h1>
-  </header>
-
-  <button class="mute-button" onclick="toggleMute()">🔊</button>
-
-  <div class="lang-switch">
-    <strong>語言 / Language:</strong>
-    <button onclick="setLanguage('zh')">中文</button>
-    <button onclick="setLanguage('en')">English</button>
-  </div>
-
-  <nav>
-    <a href="index.html">主頁 / Home</a>
-    <a href="about.html">關於我們 / About</a>
-    <a href="wott.html">《WOTT》</a>
-  </nav>
-
-  <div class="container">
-    <div id="zh">
-      <h2>次世代手機遊戲</h2>
-      <p>《WOTT》是一款由天禾工作室獨立開發的次世代 3A 級手機遊戲，支援 Android 與 iOS 平台。</p>
-      <button class="download-btn" onclick="alert('本遊戲尚在開發中，請前往主頁公告獲取最新消息。')">立即下載</button>
-    </div>
-    <div id="en" style="display: none;">
-      <h2>Next-Gen Mobile Game</h2>
-      <p>《WOTT》 is a next-gen AAA mobile game currently developed by Tian He Studio, supporting both Android and iOS platforms.</p>
-      <button class="download-btn" onclick="alert('This game is still in development. Please check homepage announcements for updates.')">Download Now</button>
-    </div>
-  </div>
-
-  <footer>
-    © 2025 天禾工作室 | Tian He Studio
-  </footer>
-
-  <!-- 背景音樂 -->
-  <audio id="bgm" src="music/bgm.mp3" loop autoplay></audio>
-
-  <script>
-    function setLanguage(lang) {
-      document.getElementById('zh').style.display = lang === 'zh' ? 'block' : 'none';
-      document.getElementById('en').style.display = lang === 'en' ? 'block' : 'none';
-      document.getElementById('title').textContent = lang === 'zh' ? '《WOTT》' : 'WOTT';
-    }
-
-    const audio = document.getElementById('bgm');
-    const button = document.querySelector('.mute-button');
-
-    function toggleMute() {
-      audio.muted = !audio.muted;
-      button.innerText = audio.muted ? "🔇" : "🔊";
-      localStorage.setItem("bgmMuted", audio.muted);
-    }
-
-    // 在切頁時保持靜音狀態
-    window.addEventListener('DOMContentLoaded', () => {
-      const isMuted = localStorage.getItem("bgmMuted") === "true";
-      audio.muted = isMuted;
-      button.innerText = isMuted ? "🔇" : "🔊";
-    });
-  </script>
-
+  <!-- 嵌入播放器 -->
+  <iframe src="player.html" width="0" height="0" style="border: none;"></iframe>
 </body>
 </html>
