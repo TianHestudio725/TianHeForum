@@ -73,75 +73,73 @@
 
         /* 缩小的Logo容器 */
         .logo-container {
-            margin: 30px 0;
+            margin: 20px 0; /* 減少上邊距 */
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 15px; /* 減少間距 */
         }
 
-        /* 缩小的Logo样式 */
+        /* 明顯縮小的Logo樣式 */
         .tianhe-logo {
-            height: auto;
-            max-height: 100px;
+            height: 80px; /* 原150px */
             width: auto;
-            max-width: 200px;
+            max-width: 160px; /* 原300px */
             border: 2px solid #D4AF37;
-            border-radius: 6px;
-            padding: 5px;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
+            border-radius: 5px;
+            padding: 4px;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
             transition: all 0.3s ease;
         }
 
         .wott-logo {
-            height: auto;
-            max-height: 80px;
+            height: 60px; /* 原120px */
             width: auto;
-            max-width: 180px;
+            max-width: 140px; /* 原250px */
             border: 2px solid #D4AF37;
-            border-radius: 6px;
-            padding: 5px;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
+            border-radius: 5px;
+            padding: 4px;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
             transition: all 0.3s ease;
         }
 
         .tianhe-logo:hover, .wott-logo:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.9);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.9);
         }
 
-        /* 缩小的公告区域 */
+        /* 明顯縮小的公告區域 */
         .announcement {
             background-color: rgba(15, 15, 15, 0.9);
             border: 2px solid #D4AF37;
-            border-radius: 8px;
-            padding: 20px;
-            max-width: 500px;
+            border-radius: 6px;
+            padding: 15px;
+            max-width: 360px; /* 原600px */
             width: 85%;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
             text-align: center;
-            margin: 30px 0;
+            margin: 20px 0;
             backdrop-filter: blur(5px);
         }
 
         .announcement h2 {
             color: #D4AF37;
-            font-size: 22px;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+            font-size: 18px; /* 原28px */
+            margin-bottom: 10px;
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
         }
 
         .announcement p {
-            font-size: 16px;
-            line-height: 1.5;
+            font-size: 14px; /* 原18px */
+            line-height: 1.4;
         }
 
         .footer {
             margin-top: auto;
-            padding: 20px;
+            padding: 15px;
             color: #999;
-            font-size: 14px;
+            font-size: 12px;
             text-align: center;
             width: 100%;
             background-color: rgba(10, 10, 10, 0.9);
@@ -184,7 +182,7 @@
             explosion.style.height = '180px';
             document.body.appendChild(explosion);
             
-            // 更多爆炸碎片（增加到50个）
+            // 更多爆炸碎片（50个）
             createShrapnel(x, y, 50);
             
             // 移除元素
@@ -221,7 +219,7 @@
                     setTimeout(() => {
                         shrapnel.remove();
                     }, 1500);
-                }, i * 15);  // 更快的碎片生成间隔
+                }, i * 15);
             }
         }
 
@@ -234,7 +232,7 @@
             createExplosion();
             setTimeout(createExplosion, 300);
             
-            // 设置更频繁的爆炸间隔（2.5秒）
+            // 设置爆炸间隔（2.5秒）
             setInterval(createExplosion, 2500);
         }
 
