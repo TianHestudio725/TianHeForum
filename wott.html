@@ -1,14 +1,462 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <title>WOTT 遊戲介紹</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="《WOTT》官方下載 - 天禾工作室開發的次世代手機遊戲">
+    <title id="page-title">《WOTT》 - 天禾論壇</title>
+    <style>
+        :root {
+            --primary-color: #222;
+            --secondary-color: #333;
+            --accent-color: #575757;
+            --highlight-color: #4a6fa5;
+            --text-light: #fff;
+            --text-dark: #333;
+            --bg-light: #f4f4f4;
+        }
+        
+        body {
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            background: var(--bg-light);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+        
+        header, footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .logo {
+            max-width: 200px;
+            height: auto;
+            margin: 1rem auto;
+            display: block;
+            transition: transform 0.3s;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem;
+        }
+        
+        nav a {
+            color: var(--text-light);
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        .lang-switch {
+            text-align: right;
+            padding: 0.75rem 1.5rem;
+            background-color: #eee;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .lang-switch button {
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .lang-switch button:hover {
+            background: var(--accent-color);
+        }
+        
+        .download-section {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .download-btn {
+            padding: 1rem 2rem;
+            background-color: var(--highlight-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin: 1rem 0.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .download-btn:hover {
+            background-color: #3a5a8f;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+        
+        .platform-btns {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .mute-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .mute-button:hover {
+            background: var(--accent-color);
+            transform: scale(1.1);
+        }
+        
+        .requirements {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .features {
+            margin: 2rem 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--highlight-color);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .platform-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .download-btn {
+                width: 100%;
+                max-width: 300px;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
 </head>
-<body style="margin: 0; padding: 0; font-family: sans-serif; background-color: #111; color: #fff; text-align: center;">
-  <h1 style="margin-top: 100px;">WOTT 遊戲介紹</h1>
-  <p>準備好加入戰場了嗎？WOTT 是一款多人第一人稱射擊遊戲。</p>
-
-  <!-- 嵌入播放器 -->
-  <iframe src="player.html" width="0" height="0" style="border: none;"></iframe>
+<body>
+    <!-- 靜音按鈕 -->
+    <button class="mute-button" onclick="toggleMute()" aria-label="切換背景音樂">🔊</button>
+    
+    <header>
+        <img src="WOTT官方logo.png" alt="WOTT LOGO" class="logo">
+        <h1 id="title">《WOTT》</h1>
+    </header>
+    
+    <div class="lang-switch">
+        <strong id="lang-label">語言 / Language:</strong>
+        <button onclick="setLanguage('zh')">中文</button>
+        <button onclick="setLanguage('en')">English</button>
+    </div>
+    
+    <nav>
+        <a href="index.html" id="nav-home">主頁 / Home</a>
+        <a href="about.html" id="nav-about">關於我們 / About</a>
+        <a href="wott.html" id="nav-wott">《WOTT》</a>
+    </nav>
+    
+    <div class="container">
+        <div id="zh-content">
+            <h2>次世代手機遊戲體驗</h2>
+            <p>《WOTT》是由天禾工作室獨立開發的次世代 3A 級手機遊戲，支援 Android 與 iOS 平台，帶來前所未有的移動遊戲體驗。</p>
+            
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">🎮</div>
+                    <div>
+                        <h3>創新遊戲玩法</h3>
+                        <p>獨特的戰鬥系統和社交互動功能，重新定義手機遊戲體驗</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌐</div>
+                    <div>
+                        <h3>跨平台遊玩</h3>
+                        <p>支持Android和iOS玩家同服競技，無縫連接</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔊</div>
+                    <div>
+                        <h3>沉浸式音效</h3>
+                        <p>專業音效團隊打造，提供劇院級聽覺享受</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="platform-btns">
+                <button class="download-btn" onclick="showDownloadModal('android')">
+                    <span>⬇️</span> Android 下載
+                </button>
+                <button class="download-btn" onclick="showDownloadModal('ios')">
+                    <span>⬇️</span> iOS 下載
+                </button>
+            </div>
+            
+            <div class="requirements">
+                <h3>系統需求</h3>
+                <ul>
+                    <li><strong>Android:</strong> 8.0 或更高版本，4GB RAM</li>
+                    <li><strong>iOS:</strong> iPhone 8 或更新機型，iOS 14+</li>
+                    <li><strong>儲存空間:</strong> 至少 2GB 可用空間</li>
+                </ul>
+            </div>
+            
+            <div class="download-notice">
+                <p>⚠️ 注意：本遊戲目前處於開發測試階段，下載版本可能包含未完成內容。</p>
+            </div>
+        </div>
+        
+        <div id="en-content" style="display: none;">
+            <h2>Next-Gen Mobile Gaming Experience</h2>
+            <p>"WOTT" is a next-gen AAA mobile game developed by Tian He Studio, supporting both Android and iOS platforms, delivering an unprecedented mobile gaming experience.</p>
+            
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">🎮</div>
+                    <div>
+                        <h3>Innovative Gameplay</h3>
+                        <p>Unique combat system and social features that redefine mobile gaming</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌐</div>
+                    <div>
+                        <h3>Cross-Platform Play</h3>
+                        <p>Seamless connection between Android and iOS players</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔊</div>
+                    <div>
+                        <h3>Immersive Audio</h3>
+                        <p>Professional sound design for theater-quality experience</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="platform-btns">
+                <button class="download-btn" onclick="showDownloadModal('android')">
+                    <span>⬇️</span> Download for Android
+                </button>
+                <button class="download-btn" onclick="showDownloadModal('ios')">
+                    <span>⬇️</span> Download for iOS
+                </button>
+            </div>
+            
+            <div class="requirements">
+                <h3>System Requirements</h3>
+                <ul>
+                    <li><strong>Android:</strong> 8.0 or higher, 4GB RAM</li>
+                    <li><strong>iOS:</strong> iPhone 8 or newer, iOS 14+</li>
+                    <li><strong>Storage:</strong> At least 2GB free space</li>
+                </ul>
+            </div>
+            
+            <div class="download-notice">
+                <p>⚠️ Note: This game is currently in development beta, downloaded version may contain unfinished content.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer id="footer">
+        © 2025 天禾工作室 | Tian He Studio
+    </footer>
+    
+    <!-- 背景音樂 -->
+    <audio id="bgm" loop>
+        <source src="music/bgm.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- 下載模態框 -->
+    <div id="download-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 500px; text-align: center;">
+            <h3 id="modal-title">下載《WOTT》</h3>
+            <p id="modal-content">本遊戲尚在開發中，正式版將於2025年第四季度發布。</p>
+            <button onclick="closeModal()" style="padding: 0.75rem 1.5rem; background: var(--highlight-color); color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 1rem;">關閉</button>
+        </div>
+    </div>
+    
+    <script>
+        // 多語言內容配置
+        const translations = {
+            'zh': {
+                'page-title': '《WOTT》 - 天禾論壇',
+                'title': '《WOTT》',
+                'lang-label': '語言:',
+                'nav-home': '主頁',
+                'nav-about': '關於我們',
+                'nav-wott': '《WOTT》',
+                'footer': '© 2025 天禾工作室',
+                'modal-title': '下載《WOTT》',
+                'modal-content': '本遊戲尚在開發中，正式版將於2025年第四季度發布。',
+                'close-btn': '關閉'
+            },
+            'en': {
+                'page-title': 'WOTT - TianHe Forum',
+                'title': 'WOTT',
+                'lang-label': 'Language:',
+                'nav-home': 'Home',
+                'nav-about': 'About Us',
+                'nav-wott': 'WOTT',
+                'footer': '© 2025 Tian He Studio',
+                'modal-title': 'Download WOTT',
+                'modal-content': 'The game is still in development, official version will be released in Q4 2025.',
+                'close-btn': 'Close'
+            }
+        };
+        
+        // 設置語言
+        function setLanguage(lang) {
+            // 切換內容顯示
+            document.getElementById('zh-content').style.display = lang === 'zh' ? 'block' : 'none';
+            document.getElementById('en-content').style.display = lang === 'en' ? 'block' : 'none';
+            
+            // 更新所有翻譯文本
+            for (const [key, value] of Object.entries(translations[lang])) {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = value;
+                }
+            }
+            
+            // 存儲語言偏好
+            localStorage.setItem('preferredLanguage', lang);
+        }
+        
+        // 音樂控制
+        const muteBtn = document.querySelector(".mute-button");
+        const bgm = document.getElementById("bgm");
+        
+        // 嘗試播放音樂（需要用戶交互）
+        function attemptPlay() {
+            bgm.play().catch(e => {
+                console.log("自動播放被阻止:", e);
+                muteBtn.textContent = "🔇";
+                bgm.muted = true;
+                localStorage.setItem("bgmMuted", "true");
+            });
+        }
+        
+        function toggleMute() {
+            // 第一次點擊時嘗試播放
+            if (bgm.paused && !bgm.muted) {
+                attemptPlay();
+            }
+            
+            bgm.muted = !bgm.muted;
+            muteBtn.textContent = bgm.muted ? "🔇" : "🔊";
+            localStorage.setItem("bgmMuted", bgm.muted);
+        }
+        
+        // 下載模態框功能
+        function showDownloadModal(platform) {
+            const modal = document.getElementById('download-modal');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-content');
+            
+            const lang = localStorage.getItem('preferredLanguage') || 'zh';
+            
+            if (lang === 'zh') {
+                title.textContent = platform === 'android' ? 
+                    'Android 版下載' : 'iOS 版下載';
+                content.textContent = platform === 'android' ?
+                    'Android 版本將於2025年10月開放測試下載。' :
+                    'iOS 版本將於2025年11月開放測試下載。';
+            } else {
+                title.textContent = platform === 'android' ? 
+                    'Download for Android' : 'Download for iOS';
+                content.textContent = platform === 'android' ?
+                    'Android beta version will be available in October 2025.' :
+                    'iOS beta version will be available in November 2025.';
+            }
+            
+            modal.style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.getElementById('download-modal').style.display = 'none';
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 設置語言
+            const preferredLanguage = localStorage.getItem('preferredLanguage') || 'zh';
+            setLanguage(preferredLanguage);
+            
+            // 設置音樂狀態
+            const isMuted = localStorage.getItem("bgmMuted") === "true";
+            bgm.muted = isMuted;
+            muteBtn.textContent = isMuted ? "🔇" : "🔊";
+        });
+    </script>
 </body>
 </html>
