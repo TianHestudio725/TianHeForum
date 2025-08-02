@@ -1,121 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>天禾論壇 TianHe Forum</title>
-  <style>
-    body {
-      font-family: "Microsoft JhengHei", sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-    }
-
-    header {
-      background-color: #222;
-      color: #fff;
-      padding: 1em;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.5em;
-    }
-
-    nav a {
-      color: #fff;
-      margin-left: 1em;
-      text-decoration: none;
-    }
-
-    .container {
-      padding: 2em;
-    }
-
-    .announcement {
-      background-color: #fff3cd;
-      border: 1px solid #ffeeba;
-      padding: 1em;
-      margin-bottom: 2em;
-    }
-
-    #mute-btn {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      background-color: #444;
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      z-index: 999;
-      transition: background-color 0.3s;
-    }
-
-    #mute-btn:hover {
-      background-color: #666;
-    }
-
-    #bgm {
-      display: none;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <title>WOTT 首頁</title>
 </head>
-<body>
+<body style="margin: 0; padding: 0; font-family: sans-serif; background-color: black; color: gold; text-align: center;">
+  <h1 style="margin-top: 100px;">WOTT 首頁</h1>
+  <p>歡迎來到 WOTT 官方網站！</p>
 
-  <header>
-    <h1>天禾論壇 TianHe Forum</h1>
-    <nav>
-      <a href="index.html">首頁</a>
-      <a href="about.html">關於我們</a>
-      <a href="wott.html">WOTT下載</a>
-    </nav>
-  </header>
-
-  <!-- 靜音按鈕 -->
-  <button id="mute-btn">🔊</button>
-
-  <!-- 背景音樂播放器 -->
-  <audio id="bgm" src="bgm.mp3" loop autoplay></audio>
-
-  <div class="container">
-    <div class="announcement">
-      <h3>📢 最新公告 / Latest Announcement</h3>
-      <p>
-        📅 本論壇最後更新於 2025 年 7 月 24 日，已新增背景音樂播放功能。<br/>
-        📅 Last updated on July 24, 2025 – Background music feature added.
-      </p>
-      <p>
-        本網站與《WOTT》仍在開發階段，部分功能尚未開放，敬請期待正式發布。<br/>
-        This site and the game "WOTT" are still under development. Some features are not yet available. Please stay tuned for official release.
-      </p>
-    </div>
-
-    <p>歡迎來到天禾論壇！這裡是 WOTT 玩家與開發者的交流平台。</p>
-    <p>Welcome to the TianHe Forum, the community hub for WOTT players and developers.</p>
-  </div>
-
-  <script>
-    const bgm = document.getElementById('bgm');
-    const muteBtn = document.getElementById('mute-btn');
-
-    // 初始化靜音狀態
-    const isMuted = localStorage.getItem("bgm-muted") === "true";
-    bgm.muted = isMuted;
-    muteBtn.textContent = isMuted ? "🔇" : "🔊";
-
-    // 點擊切換靜音
-    muteBtn.onclick = () => {
-      bgm.muted = !bgm.muted;
-      localStorage.setItem("bgm-muted", bgm.muted);
-      muteBtn.textContent = bgm.muted ? "🔇" : "🔊";
-    };
-  </script>
-
+  <!-- 嵌入播放器 -->
+  <iframe src="player.html" width="0" height="0" style="border: none;"></iframe>
 </body>
 </html>
