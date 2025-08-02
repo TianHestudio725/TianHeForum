@@ -18,7 +18,7 @@
             overflow-x: hidden;
         }
 
-        /* 更明显的爆炸效果 */
+        /* 更强烈的爆炸效果 */
         .explosion {
             position: fixed;
             pointer-events: none;
@@ -28,17 +28,17 @@
             transform: scale(0);
             background: radial-gradient(circle, 
                 rgba(255, 230, 0, 0.9) 0%, 
-                rgba(255, 120, 0, 0.8) 40%, 
-                rgba(255, 50, 0, 0.7) 70%, 
+                rgba(255, 100, 0, 0.8) 40%, 
+                rgba(255, 30, 0, 0.7) 70%, 
                 transparent 90%);
-            box-shadow: 0 0 80px rgba(255, 100, 0, 0.8);
+            box-shadow: 0 0 100px rgba(255, 80, 0, 0.9);
             animation: explode 0.8s ease-out forwards;
         }
 
         @keyframes explode {
             0% { transform: scale(0); opacity: 0; }
-            30% { transform: scale(2); opacity: 1; }
-            100% { transform: scale(3.5); opacity: 0; }
+            30% { transform: scale(2.5); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
         }
 
         /* 更明显的爆炸碎片 */
@@ -46,19 +46,19 @@
             position: fixed;
             pointer-events: none;
             z-index: 0;
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: linear-gradient(to right, 
                 rgba(255, 230, 0, 0.9), 
-                rgba(255, 120, 0, 0.8));
-            filter: blur(0.8px);
-            animation: shrapnel-fly 1.2s linear forwards;
+                rgba(255, 100, 0, 0.8));
+            filter: blur(1px);
+            animation: shrapnel-fly 1.5s linear forwards;
         }
 
         @keyframes shrapnel-fly {
-            0% { transform: translate(0, 0) scale(1.2); opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)) scale(0.6); opacity: 0; }
+            0% { transform: translate(0, 0) scale(1.5); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0.5); opacity: 0; }
         }
 
         /* 内容容器 */
@@ -71,75 +71,77 @@
             align-items: center;
         }
 
+        /* 缩小的Logo容器 */
         .logo-container {
-            margin: 60px 0;
+            margin: 30px 0;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 30px;
+            gap: 20px;
         }
 
-        /* Logo样式 - 更明显 */
+        /* 缩小的Logo样式 */
         .tianhe-logo {
             height: auto;
-            max-height: 150px;
+            max-height: 100px;
             width: auto;
-            max-width: 300px;
-            border: 3px solid #D4AF37;
-            border-radius: 8px;
-            padding: 8px;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
+            max-width: 200px;
+            border: 2px solid #D4AF37;
+            border-radius: 6px;
+            padding: 5px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
             transition: all 0.3s ease;
         }
 
         .wott-logo {
             height: auto;
-            max-height: 120px;
+            max-height: 80px;
             width: auto;
-            max-width: 250px;
-            border: 3px solid #D4AF37;
-            border-radius: 8px;
-            padding: 8px;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
+            max-width: 180px;
+            border: 2px solid #D4AF37;
+            border-radius: 6px;
+            padding: 5px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
             transition: all 0.3s ease;
         }
 
         .tianhe-logo:hover, .wott-logo:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 35px rgba(212, 175, 55, 0.9);
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.9);
         }
 
+        /* 缩小的公告区域 */
         .announcement {
             background-color: rgba(15, 15, 15, 0.9);
-            border: 3px solid #D4AF37;
-            border-radius: 10px;
-            padding: 30px;
-            max-width: 600px;
-            width: 90%;
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+            border: 2px solid #D4AF37;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 500px;
+            width: 85%;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
             text-align: center;
-            margin: 40px 0;
+            margin: 30px 0;
             backdrop-filter: blur(5px);
         }
 
         .announcement h2 {
             color: #D4AF37;
-            font-size: 28px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+            font-size: 22px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
         }
 
         .announcement p {
-            font-size: 18px;
-            line-height: 1.6;
+            font-size: 16px;
+            line-height: 1.5;
         }
 
         .footer {
             margin-top: auto;
-            padding: 25px;
+            padding: 20px;
             color: #999;
-            font-size: 16px;
+            font-size: 14px;
             text-align: center;
             width: 100%;
             background-color: rgba(10, 10, 10, 0.9);
@@ -167,23 +169,23 @@
     </div>
 
     <script>
-        // 创建更明显的爆炸效果
+        // 创建更强烈的爆炸效果
         function createExplosion() {
             // 随机位置（避开边缘）
-            const x = 150 + Math.random() * (window.innerWidth - 300);
-            const y = 150 + Math.random() * (window.innerHeight - 300);
+            const x = 100 + Math.random() * (window.innerWidth - 200);
+            const y = 100 + Math.random() * (window.innerHeight - 200);
             
             // 更大的爆炸中心
             const explosion = document.createElement('div');
             explosion.className = 'explosion';
             explosion.style.left = `${x}px`;
             explosion.style.top = `${y}px`;
-            explosion.style.width = '150px';
-            explosion.style.height = '150px';
+            explosion.style.width = '180px';
+            explosion.style.height = '180px';
             document.body.appendChild(explosion);
             
-            // 更多爆炸碎片
-            createShrapnel(x, y, 40);
+            // 更多爆炸碎片（增加到50个）
+            createShrapnel(x, y, 50);
             
             // 移除元素
             setTimeout(() => {
@@ -200,7 +202,7 @@
                     
                     // 随机方向
                     const angle = Math.random() * Math.PI * 2;
-                    const distance = 80 + Math.random() * 120;
+                    const distance = 100 + Math.random() * 150;
                     
                     shrapnel.style.left = `${x}px`;
                     shrapnel.style.top = `${y}px`;
@@ -208,18 +210,18 @@
                     shrapnel.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
                     
                     // 随机颜色变化
-                    const hue = 40 + Math.random() * 20;
+                    const hue = 35 + Math.random() * 25;
                     shrapnel.style.background = `linear-gradient(to right, 
-                        hsla(${hue}, 100%, 70%, 0.9), 
-                        hsla(${hue-15}, 100%, 55%, 0.8))`;
+                        hsla(${hue}, 100%, 75%, 0.9), 
+                        hsla(${hue-20}, 100%, 60%, 0.8))`;
                     
                     document.body.appendChild(shrapnel);
                     
                     // 移除碎片
                     setTimeout(() => {
                         shrapnel.remove();
-                    }, 1200);
-                }, i * 20);
+                    }, 1500);
+                }, i * 15);  // 更快的碎片生成间隔
             }
         }
 
@@ -228,11 +230,12 @@
             // 清除现有特效
             document.querySelectorAll('.explosion, .shrapnel').forEach(el => el.remove());
             
-            // 创建初始爆炸
+            // 创建初始爆炸（2个同时）
             createExplosion();
+            setTimeout(createExplosion, 300);
             
-            // 设置更频繁的爆炸间隔（3秒）
-            setInterval(createExplosion, 3000);
+            // 设置更频繁的爆炸间隔（2.5秒）
+            setInterval(createExplosion, 2500);
         }
 
         // 页面加载和窗口大小改变时初始化特效
