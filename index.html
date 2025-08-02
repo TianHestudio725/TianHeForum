@@ -3,96 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>天禾論壇</title>
+    <title>天禾论坛</title>
     <style>
         body {
             font-family: 'Microsoft JhengHei', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #f5f5f5;
             display: flex;
             flex-direction: column;
+            align-items: center;
             min-height: 100vh;
         }
-        
-        .header {
-            background-color: #222;
-            padding: 2rem 0;
+        .logo-container {
+            margin: 50px 0;
             text-align: center;
         }
-        
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
         .tianhe-logo {
-            height: 80px;
-            width: auto;
+            height: 100px;
+            margin-bottom: 20px;
         }
-        
         .wott-logo {
-            height: 60px;
-            width: auto;
+            height: 80px;
         }
-        
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
-        
         .announcement {
             background-color: #fff;
-            border-left: 4px solid #ffc107;
-            padding: 1.5rem;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-top: 2rem;
-        }
-        
-        .announcement h2 {
-            color: #222;
-            margin-top: 0;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 0.5rem;
-        }
-        
-        .footer {
-            background-color: #222;
-            color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             text-align: center;
-            padding: 1rem;
-            font-size: 0.9rem;
+        }
+        .footer {
+            margin-top: auto;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo-container">
-            <img src="tianhe-logo.png" alt="天禾工作室" class="tianhe-logo">
-            <img src="wott-logo.png" alt="WOTT遊戲" class="wott-logo">
-        </div>
-    </header>
-    
-    <main class="main-content">
-        <div class="announcement">
-            <h2>系統公告</h2>
-            <p>本論壇正在進行重大更新，請密切留意最新公告。</p>
-            <p>更新期間部分功能可能暫時無法使用，敬請見諒。</p>
-        </div>
-    </main>
-    
-    <footer class="footer">
-        © 2025 天禾工作室 版權所有
-    </footer>
+    <div class="logo-container">
+        <img src="tianhe-logo.png" alt="天禾工作室" class="tianhe-logo">
+        <img src="wott-logo.png" alt="WOTT游戏" class="wott-logo">
+    </div>
+
+    <div class="announcement">
+        <h2>最新公告</h2>
+        <p>本论坛正在大更新中，请多加留意公告</p>
+    </div>
+
+    <div class="footer">
+        ©2025 天禾工作室
+    </div>
 </body>
 </html>
