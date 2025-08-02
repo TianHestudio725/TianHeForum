@@ -20,73 +20,73 @@
                 linear-gradient(rgba(50, 10, 0, 0.2), rgba(50, 10, 0, 0.2));
         }
 
-        /* 导弹本体 - 修正方向 */
+        /* 导弹本体 - 更明显设计 */
         .missile {
             position: fixed;
             pointer-events: none;
             z-index: 0;
-            width: 40px;
-            height: 15px;
+            width: 50px;
+            height: 20px;
             background: linear-gradient(to right, 
-                #888 0%, 
-                #aaa 50%, 
-                #ccc 100%);
-            border-radius: 5px 10px 10px 5px; /* 调整圆角方向 */
+                #555 0%, 
+                #999 50%, 
+                #ddd 100%);
+            border-radius: 5px 15px 15px 5px;
             transform: rotate(var(--angle));
-            animation: missile-fly 2s linear forwards;
-            box-shadow: 0 0 10px rgba(255, 100, 0, 0.5);
+            animation: missile-fly 1.5s linear forwards;
+            box-shadow: 0 0 15px rgba(255, 100, 0, 0.7);
         }
 
-        /* 导弹尾焰 - 修正方向 */
+        /* 导弹尾焰 - 更明显 */
         .missile::after {
             content: '';
             position: absolute;
-            left: -25px; /* 改为左侧 */
-            top: 2px;
-            width: 40px;
-            height: 10px;
+            left: -40px;
+            top: 0;
+            width: 50px;
+            height: 20px;
             background: linear-gradient(to right, 
                 transparent,
-                rgba(255, 200, 0, 0.8),
-                rgba(255, 100, 0, 0.9));
-            border-radius: 5px 0 0 5px; /* 调整圆角方向 */
-            filter: blur(3px);
-            animation: missile-fire 0.1s infinite alternate;
+                rgba(255, 200, 0, 0.9),
+                rgba(255, 80, 0, 0.9));
+            border-radius: 10px 0 0 10px;
+            filter: blur(5px);
+            animation: missile-fire 0.05s infinite alternate;
         }
 
         @keyframes missile-fly {
             0% { left: var(--start-x); top: var(--start-y); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
+            5% { opacity: 1; }
+            95% { opacity: 1; }
             100% { left: var(--end-x); top: var(--end-y); opacity: 0; }
         }
 
         @keyframes missile-fire {
-            0% { transform: scaleX(1); opacity: 0.8; }
-            100% { transform: scaleX(1.3); opacity: 1; }
+            0% { transform: scale(1, 1.2); opacity: 0.9; }
+            100% { transform: scale(1.5, 1.5); opacity: 1; }
         }
 
-        /* 导弹爆炸效果 */
+        /* 导弹爆炸效果 - 更明显 */
         .missile-explosion {
             position: fixed;
             pointer-events: none;
             z-index: 0;
             border-radius: 50%;
-            filter: blur(1px);
+            filter: blur(2px);
             transform: scale(0);
             background: radial-gradient(circle, 
                 rgba(255, 255, 0, 0.9) 0%, 
-                rgba(255, 100, 0, 0.8) 40%, 
-                rgba(200, 30, 0, 0.6) 70%, 
+                rgba(255, 100, 0, 0.9) 40%, 
+                rgba(200, 30, 0, 0.8) 70%, 
                 transparent 90%);
-            box-shadow: 0 0 100px rgba(255, 100, 0, 0.8);
-            animation: missile-explode 1s ease-out forwards;
+            box-shadow: 0 0 150px rgba(255, 80, 0, 0.9);
+            animation: missile-explode 0.8s ease-out forwards;
         }
 
         @keyframes missile-explode {
             0% { transform: scale(0); opacity: 0; }
-            20% { transform: scale(2); opacity: 1; }
-            100% { transform: scale(4); opacity: 0; }
+            30% { transform: scale(2.5); opacity: 1; }
+            100% { transform: scale(5); opacity: 0; }
         }
 
         /* 内容容器 */
@@ -119,17 +119,27 @@
         </div>
     </div>
 
-    <!-- 音效元素 -->
-    <audio id="launch-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-rocket-whoosh-1714.mp3" preload="auto"></audio>
-    <audio id="explosion-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-explosion-impact-1684.mp3" preload="auto"></audio>
+    <!-- 更明显的音效元素 -->
+    <audio id="launch-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-space-rocket-whizzing-1563.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="explosion-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-big-explosion-2780.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        // 发射导弹
+        // 增强音效播放函数
+        function playSound(id, volume = 1.0) {
+            const sound = document.getElementById(id);
+            sound.volume = volume;
+            sound.currentTime = 0;
+            sound.play().catch(e => console.log("音效播放被阻止:", e));
+        }
+
+        // 发射导弹 - 更明显效果
         function launchMissile() {
-            // 播放发射音效
-            const launchSound = document.getElementById('launch-sound');
-            launchSound.currentTime = 0;
-            launchSound.play();
+            // 播放更响亮的发射音效
+            playSound('launch-sound', 0.7);
             
             // 随机起点和终点
             let startX, startY;
@@ -138,18 +148,18 @@
             switch(side) {
                 case 0: // 上边
                     startX = Math.random() * window.innerWidth;
-                    startY = -30;
+                    startY = -50;
                     break;
                 case 1: // 右边
-                    startX = window.innerWidth + 30;
+                    startX = window.innerWidth + 50;
                     startY = Math.random() * window.innerHeight;
                     break;
                 case 2: // 下边
                     startX = Math.random() * window.innerWidth;
-                    startY = window.innerHeight + 30;
+                    startY = window.innerHeight + 50;
                     break;
                 case 3: // 左边
-                    startX = -30;
+                    startX = -50;
                     startY = Math.random() * window.innerHeight;
                     break;
             }
@@ -160,7 +170,7 @@
             // 计算角度
             const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
             
-            // 创建导弹
+            // 创建导弹（更大更明显）
             const missile = document.createElement('div');
             missile.className = 'missile';
             missile.style.setProperty('--start-x', `${startX}px`);
@@ -175,29 +185,27 @@
             setTimeout(() => {
                 missile.remove();
                 createMissileExplosion(endX, endY);
-            }, 2000);
+            }, 1500);
         }
 
-        // 创建导弹爆炸效果
+        // 创建导弹爆炸效果 - 更明显
         function createMissileExplosion(x, y) {
-            // 播放爆炸音效
-            const explosionSound = document.getElementById('explosion-sound');
-            explosionSound.currentTime = 0;
-            explosionSound.play();
+            // 播放更响亮的爆炸音效
+            playSound('explosion-sound', 0.8);
             
-            // 爆炸中心
+            // 创建更大的爆炸效果
             const explosion = document.createElement('div');
             explosion.className = 'missile-explosion';
             explosion.style.left = `${x}px`;
             explosion.style.top = `${y}px`;
-            explosion.style.width = '150px';
-            explosion.style.height = '150px';
+            explosion.style.width = '200px';
+            explosion.style.height = '200px';
             document.body.appendChild(explosion);
             
             // 移除元素
             setTimeout(() => {
                 explosion.remove();
-            }, 1000);
+            }, 800);
         }
 
         // 初始化特效
@@ -208,13 +216,36 @@
             // 立即发射第一枚导弹
             launchMissile();
             
-            // 设置导弹发射间隔
-            setInterval(launchMissile, 4000);
+            // 设置更频繁的导弹发射间隔（3秒）
+            setInterval(launchMissile, 3000);
         }
 
         // 页面加载和窗口大小改变时初始化特效
         window.addEventListener('load', initEffects);
         window.addEventListener('resize', initEffects);
+
+        // 用户交互后尝试预加载音效（解决浏览器自动播放限制）
+        document.addEventListener('click', function() {
+            const launchSound = document.getElementById('launch-sound');
+            const explosionSound = document.getElementById('explosion-sound');
+            
+            if(launchSound.readyState > 0) return;
+            
+            launchSound.volume = 0;
+            explosionSound.volume = 0;
+            
+            launchSound.play().then(() => {
+                launchSound.pause();
+                launchSound.currentTime = 0;
+                launchSound.volume = 0.7;
+            }).catch(e => console.log("预加载音效失败"));
+            
+            explosionSound.play().then(() => {
+                explosionSound.pause();
+                explosionSound.currentTime = 0;
+                explosionSound.volume = 0.8;
+            }).catch(e => console.log("预加载音效失败"));
+        }, { once: true });
     </script>
 </body>
 </html>
