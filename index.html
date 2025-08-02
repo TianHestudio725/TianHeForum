@@ -43,7 +43,7 @@
       margin-bottom: 2em;
     }
 
-    .mute-button {
+    #mute-btn {
       position: fixed;
       top: 15px;
       right: 15px;
@@ -57,8 +57,12 @@
       transition: background-color 0.3s;
     }
 
-    .mute-button:hover {
+    #mute-btn:hover {
       background-color: #666;
+    }
+
+    #bgm {
+      display: none;
     }
   </style>
 </head>
@@ -73,7 +77,11 @@
     </nav>
   </header>
 
-  <button class="mute-button" onclick="toggleMute()">🔊</button>
+  <!-- 靜音按鈕 -->
+  <button id="mute-btn">🔊</button>
+
+  <!-- 背景音樂播放器 -->
+  <audio id="bgm" src="bgm.mp3" loop autoplay></audio>
 
   <div class="container">
     <div class="announcement">
@@ -92,25 +100,21 @@
     <p>Welcome to the TianHe Forum, the community hub for WOTT players and developers.</p>
   </div>
 
-  <!-- 音樂播放器 -->
-  <audio id="bgm" src="music/bgm.mp3" loop autoplay></audio>
-
   <script>
-    const audio = document.getElementById('bgm');
-    const button = document.querySelector('.mute-button');
+    const bgm = document.getElementById('bgm');
+    const muteBtn = document.getElementById('mute-btn');
 
-    function toggleMute() {
-      audio.muted = !audio.muted;
-      button.innerText = audio.muted ? "🔇" : "🔊";
-      localStorage.setItem("bgmMuted", audio.muted);
-    }
+    // 初始化靜音狀態
+    const isMuted = localStorage.getItem("bgm-muted") === "true";
+    bgm.muted = isMuted;
+    muteBtn.textContent = isMuted ? "🔇" : "🔊";
 
-    // 保留靜音狀態
-    window.addEventListener('DOMContentLoaded', () => {
-      const isMuted = localStorage.getItem("bgmMuted") === "true";
-      audio.muted = isMuted;
-      button.innerText = isMuted ? "🔇" : "🔊";
-    });
+    // 點擊切換靜音
+    muteBtn.onclick = () => {
+      bgm.muted = !bgm.muted;
+      localStorage.setItem("bgm-muted", bgm.muted);
+      muteBtn.textContent = bgm.muted ? "🔇" : "🔊";
+    };
   </script>
 
 </body>
