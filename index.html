@@ -16,45 +16,16 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* 动态火花样式 */
+        /* 动态火花样式 - 修复版 */
         .spark {
-            position: absolute;
-            background: radial-gradient(circle, #D4AF37, transparent 70%);
+            position: fixed;
+            background: radial-gradient(circle, #D4AF37 10%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
-            filter: blur(1px);
-            animation: sparkle 4s ease-in-out infinite;
+            filter: blur(0.5px);
             z-index: 0;
-        }
-
-        @keyframes sparkle {
-            0% {
-                transform: translate(0, 0) scale(0.5);
-                opacity: 0;
-                width: 10px;
-                height: 10px;
-            }
-            20% {
-                opacity: 0.8;
-            }
-            50% {
-                transform: translate(var(--move-x), var(--move-y)) scale(1.2);
-                opacity: 1;
-                width: 15px;
-                height: 15px;
-            }
-            80% {
-                opacity: 0.3;
-            }
-            100% {
-                transform: translate(var(--move-x-end), var(--move-y-end)) scale(0.2);
-                opacity: 0;
-                width: 5px;
-                height: 5px;
-            }
         }
 
         .logo-container {
@@ -90,7 +61,6 @@
 
         .tianhe-logo:hover, .wott-logo:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
         }
 
         .announcement {
@@ -105,14 +75,12 @@
             margin: 30px 0;
             position: relative;
             z-index: 1;
-            backdrop-filter: blur(5px);
         }
 
         .announcement h2 {
             color: #D4AF37;
             font-size: 24px;
             margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
         }
 
         .footer {
@@ -128,8 +96,7 @@
     </style>
 </head>
 <body>
-    <!-- 动态火花将通过JS生成 -->
-    
+    <!-- 内容部分 -->
     <div class="logo-container">
         <img src="天禾工作室官方logo.png" alt="天禾工作室" class="tianhe-logo">
         <img src="WOTT官方logo.png" alt="WOTT游戏" class="wott-logo">
@@ -144,62 +111,75 @@
         ©2025 天禾工作室 | 版权所有
     </div>
 
+    <!-- 修复后的火花特效脚本 -->
     <script>
-        // 创建动态火花
-        function createSparks() {
-            const colors = ['#D4AF37', '#FFD700', '#FFEC8B', '#FFFACD'];
+        // 创建火花元素
+        function createSpark() {
+            const spark = document.createElement('div');
+            spark.className = 'spark';
             
-            for (let i = 0; i < 30; i++) {
-                const spark = document.createElement('div');
-                spark.className = 'spark';
-                
-                // 随机位置
-                const startX = Math.random() * window.innerWidth;
-                const startY = Math.random() * window.innerHeight;
-                
-                // 随机移动距离
-                const moveX = (Math.random() - 0.5) * 200;
-                const moveY = (Math.random() - 0.5) * 200;
-                const moveXEnd = moveX * 1.5;
-                const moveYEnd = moveY * 1.5;
-                
-                // 随机大小
-                const size = 5 + Math.random() * 10;
-                
-                // 随机颜色
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                
-                // 随机延迟
-                const delay = Math.random() * 5;
-                
-                // 随机动画持续时间
-                const duration = 3 + Math.random() * 4;
-                
-                // 设置样式
-                spark.style.left = `${startX}px`;
-                spark.style.top = `${startY}px`;
-                spark.style.width = `${size}px`;
-                spark.style.height = `${size}px`;
-                spark.style.background = `radial-gradient(circle, ${color}, transparent 70%)`;
-                spark.style.setProperty('--move-x', `${moveX}px`);
-                spark.style.setProperty('--move-y', `${moveY}px`);
-                spark.style.setProperty('--move-x-end', `${moveXEnd}px`);
-                spark.style.setProperty('--move-y-end', `${moveYEnd}px`);
-                spark.style.animationDelay = `${delay}s`;
-                spark.style.animationDuration = `${duration}s`;
-                
-                document.body.appendChild(spark);
+            // 随机位置
+            const startX = Math.random() * window.innerWidth;
+            const startY = Math.random() * window.innerHeight;
+            
+            // 随机大小
+            const size = 3 + Math.random() * 7;
+            
+            // 设置初始样式
+            spark.style.left = `${startX}px`;
+            spark.style.top = `${startY}px`;
+            spark.style.width = `${size}px`;
+            spark.style.height = `${size}px`;
+            spark.style.opacity = '0';
+            
+            document.body.appendChild(spark);
+            
+            // 动画参数
+            const duration = 3 + Math.random() * 4;
+            const moveX = (Math.random() - 0.5) * 150;
+            const moveY = (Math.random() - 0.5) * 150;
+            
+            // 执行动画
+            spark.animate([
+                { 
+                    transform: 'translate(0, 0) scale(0.5)',
+                    opacity: 0
+                },
+                { 
+                    transform: 'translate(0, 0) scale(1.2)',
+                    opacity: 0.8,
+                    offset: 0.3
+                },
+                { 
+                    transform: `translate(${moveX}px, ${moveY}px) scale(0.2)`,
+                    opacity: 0
+                }
+            ], {
+                duration: duration * 1000,
+                easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+            });
+            
+            // 动画结束后移除并创建新火花
+            setTimeout(() => {
+                spark.remove();
+                createSpark();
+            }, duration * 1000);
+        }
+
+        // 初始化火花
+        function initSparks() {
+            // 清除现有火花
+            document.querySelectorAll('.spark').forEach(spark => spark.remove());
+            
+            // 创建20个火花
+            for (let i = 0; i < 20; i++) {
+                setTimeout(createSpark, i * 300);
             }
         }
 
-        // 页面加载后创建火花
-        window.addEventListener('load', createSparks);
-        
-        // 窗口大小改变时重新创建火花
-        window.addEventListener('resize', function() {
-            document.querySelectorAll('.spark').forEach(spark => spark.remove());
-            createSparks();
-        });
+        // 页面加载和窗口大小改变时初始化火花
+        window.addEventListener('load', initSparks);
+        window.addEventListener('resize', initSparks);
     </script>
 </body>
 </html>
