@@ -3,165 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="天禾論壇 - WOTT 玩家與開發者的交流平台">
-    <title>天禾論壇 TianHe Forum</title>
+    <title>天禾論壇</title>
     <style>
         body {
-            font-family: "Microsoft JhengHei", "Segoe UI", sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: #f5f5f5;
-            line-height: 1.6;
+            background: #f4f4f4;
+            text-align: center;
         }
-        
-        header {
-            background-color: #222;
-            color: #fff;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
+        .logo-container {
+            margin: 50px auto;
         }
-        
-        header h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            white-space: nowrap;
+        .tianhe-logo {
+            max-height: 100px;
+            margin-bottom: 20px;
         }
-        
-        nav {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
+        .wott-logo {
+            max-height: 80px;
         }
-        
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 0.25rem 0;
-            transition: opacity 0.3s;
-        }
-        
-        nav a:hover {
-            opacity: 0.8;
-        }
-        
-        .container {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
         .announcement {
-            background-color: #fff3cd;
+            background: #fff3cd;
             border: 1px solid #ffeeba;
-            padding: 1.25rem;
-            margin-bottom: 2rem;
-            border-radius: 4px;
-        }
-        
-        .mute-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #444;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 999;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-        
-        .mute-button:hover {
-            background-color: #666;
-            transform: scale(1.05);
-        }
-        
-        @media (max-width: 600px) {
-            header {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>天禾論壇 TianHe Forum</h1>
-        <nav>
-            <a href="index.html">首頁</a>
-            <a href="about.html">關於我們</a>
-            <a href="wott.html">WOTT下載</a>
-        </nav>
-    </header>
-
-    <main class="container">
-        <div class="announcement">
-            <h3>📢 最新公告 / Latest Announcement</h3>
-            <p>
-                📅 本論壇最後更新於 2025 年 7 月 24 日，已新增背景音樂播放功能。<br>
-                📅 Last updated on July 24, 2025 – Background music feature added.
-            </p>
-            <p>
-                本網站與《WOTT》仍在開發階段，部分功能尚未開放，敬請期待正式發布。<br>
-                This site and the game "WOTT" are still under development. Some features are not yet available. Please stay tuned for official release.
-            </p>
-        </div>
-        
-        <p>歡迎來到天禾論壇！這裡是 WOTT 玩家與開發者的交流平台。</p>
-        <p>Welcome to the TianHe Forum, the community hub for WOTT players and developers.</p>
-    </main>
-
-    <!-- 音樂播放器 -->
-    <audio id="bgm" src="music/bgm.mp3" loop></audio>
-    <button class="mute-button" onclick="toggleMute()" aria-label="Toggle background music">🔊</button>
-
-    <script>
-        const audio = document.getElementById('bgm');
-        const button = document.querySelector('.mute-button');
-        
-        // 尝试播放音乐（需要用户交互后才会播放）
-        function attemptPlay() {
-            audio.play().catch(e => {
-                console.log("Autoplay prevented: ", e);
-                button.textContent = "🔇";
-                audio.muted = true;
-                localStorage.setItem("bgmMuted", "true");
-            });
-        }
-        
-        // 第一次点击时尝试播放
-        let firstClick = true;
-        function toggleMute() {
-            if (firstClick) {
-                attemptPlay();
-                firstClick = false;
-            }
-            
-            audio.muted = !audio.muted;
-            button.textContent = audio.muted ? "🔇" : "🔊";
-            localStorage.setItem("bgmMuted", audio.muted);
-        }
-        
-        // 保留靜音狀態
-        document.addEventListener('DOMContentLoaded', () => {
-            const isMuted = localStorage.getItem("bgmMuted") === "true";
-            audio.muted = isMuted;
-            button.textContent = isMuted ? "🔇" : "🔊";
-        });
-    </script>
+    <div class="logo-container">
+        <img src="天禾logo.png" alt="天禾工作室" class="tianhe-logo">
+        <img src="WOTTlogo.png" alt="WOTT遊戲" class="wott-logo">
+    </div>
+    
+    <div class="announcement">
+        <h3>最新公告</h3>
+        <p>本論壇正在大更新中，請多加留意公告</p>
+    </div>
 </body>
 </html>
