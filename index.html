@@ -16,10 +16,54 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(50, 10, 0, 0.2), rgba(50, 10, 0, 0.2));
         }
 
-        /* 明显的手雷爆炸效果 */
-        .grenade-blast {
+        /* 导弹尾焰 */
+        .missile {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            width: 60px;
+            height: 20px;
+            background: linear-gradient(to right, 
+                rgba(150, 150, 150, 0.8), 
+                transparent);
+            border-radius: 50%;
+            transform: rotate(var(--angle));
+            animation: missile-fly 1.5s linear forwards;
+        }
+
+        .missile::after {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 5px;
+            width: 30px;
+            height: 10px;
+            background: linear-gradient(to right, 
+                rgba(255, 100, 0, 0.9), 
+                rgba(255, 200, 0, 0.8));
+            border-radius: 50%;
+            filter: blur(3px);
+            animation: missile-fire 0.1s infinite alternate;
+        }
+
+        @keyframes missile-fly {
+            0% { left: var(--start-x); top: var(--start-y); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: var(--end-x); top: var(--end-y); opacity: 0; }
+        }
+
+        @keyframes missile-fire {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+
+        /* 导弹爆炸效果 */
+        .missile-explosion {
             position: fixed;
             pointer-events: none;
             z-index: 0;
@@ -31,52 +75,52 @@
                 rgba(255, 100, 0, 0.8) 40%, 
                 rgba(200, 30, 0, 0.6) 70%, 
                 transparent 90%);
-            box-shadow: 0 0 50px rgba(255, 100, 0, 0.8);
-            animation: grenade-blast-anim 1s ease-out forwards;
+            box-shadow: 0 0 80px rgba(255, 100, 0, 0.8);
+            animation: missile-explode 1s ease-out forwards;
         }
 
-        @keyframes grenade-blast-anim {
+        @keyframes missile-explode {
             0% { transform: scale(0); opacity: 0; }
-            20% { transform: scale(1.5); opacity: 1; }
-            100% { transform: scale(3); opacity: 0; }
+            20% { transform: scale(1.8); opacity: 1; }
+            100% { transform: scale(3.5); opacity: 0; }
         }
 
         /* 爆炸碎片 */
-        .shrapnel {
+        .explosion-shrapnel {
             position: fixed;
             pointer-events: none;
             z-index: 0;
-            width: 4px;
-            height: 4px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: linear-gradient(to right, 
                 rgba(255, 255, 0, 0.9), 
                 rgba(255, 80, 0, 0.8));
             filter: blur(0.5px);
             transform: translate(0, 0);
-            animation: shrapnel-anim 1s linear forwards;
+            animation: shrapnel-fly 1.5s linear forwards;
         }
 
-        @keyframes shrapnel-anim {
+        @keyframes shrapnel-fly {
             0% { transform: translate(0, 0) scale(1); opacity: 1; }
             100% { transform: translate(var(--tx), var(--ty)) scale(0.5); opacity: 0; }
         }
 
         /* 冲击波 */
-        .shockwave {
+        .explosion-shockwave {
             position: fixed;
             pointer-events: none;
             z-index: 0;
             border-radius: 50%;
-            border: 2px solid rgba(255, 150, 0, 0.6);
+            border: 3px solid rgba(255, 150, 0, 0.6);
             filter: blur(1px);
             transform: scale(0);
-            animation: shockwave-anim 1.5s ease-out forwards;
+            animation: shockwave-expand 2s ease-out forwards;
         }
 
-        @keyframes shockwave-anim {
+        @keyframes shockwave-expand {
             0% { transform: scale(0); opacity: 0.8; }
-            100% { transform: scale(4); opacity: 0; }
+            100% { transform: scale(5); opacity: 0; }
         }
 
         /* 内容容器 */
@@ -174,50 +218,96 @@
     </div>
 
     <script>
-        // 创建明显的手雷爆炸效果
-        function createGrenadeExplosion() {
-            // 随机位置（但不要太靠近边缘）
-            const x = 100 + Math.random() * (window.innerWidth - 200);
-            const y = 100 + Math.random() * (window.innerHeight - 200);
+        // 发射导弹
+        function launchMissile() {
+            // 随机起点（从屏幕四边）
+            let startX, startY;
+            const side = Math.floor(Math.random() * 4);
             
-            // 创建爆炸中心
-            const blast = document.createElement('div');
-            blast.className = 'grenade-blast';
-            blast.style.left = `${x}px`;
-            blast.style.top = `${y}px`;
-            blast.style.width = '80px';
-            blast.style.height = '80px';
-            document.body.appendChild(blast);
+            switch(side) {
+                case 0: // 上边
+                    startX = Math.random() * window.innerWidth;
+                    startY = -50;
+                    break;
+                case 1: // 右边
+                    startX = window.innerWidth + 50;
+                    startY = Math.random() * window.innerHeight;
+                    break;
+                case 2: // 下边
+                    startX = Math.random() * window.innerWidth;
+                    startY = window.innerHeight + 50;
+                    break;
+                case 3: // 左边
+                    startX = -50;
+                    startY = Math.random() * window.innerHeight;
+                    break;
+            }
             
-            // 创建冲击波
-            const shockwave = document.createElement('div');
-            shockwave.className = 'shockwave';
-            shockwave.style.left = `${x}px`;
-            shockwave.style.top = `${y}px`;
-            shockwave.style.width = '50px';
-            shockwave.style.height = '50px';
-            document.body.appendChild(shockwave);
+            // 随机终点（屏幕中央区域）
+            const endX = window.innerWidth * 0.3 + Math.random() * window.innerWidth * 0.4;
+            const endY = window.innerHeight * 0.3 + Math.random() * window.innerHeight * 0.4;
             
-            // 创建爆炸碎片
-            createShrapnel(x, y, 40);
+            // 计算角度
+            const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
             
-            // 动画结束后移除元素
+            // 创建导弹
+            const missile = document.createElement('div');
+            missile.className = 'missile';
+            missile.style.setProperty('--start-x', `${startX}px`);
+            missile.style.setProperty('--start-y', `${startY}px`);
+            missile.style.setProperty('--end-x', `${endX}px`);
+            missile.style.setProperty('--end-y', `${endY}px`);
+            missile.style.setProperty('--angle', `${angle}deg`);
+            
+            document.body.appendChild(missile);
+            
+            // 导弹到达目标时爆炸
             setTimeout(() => {
-                blast.remove();
-                shockwave.remove();
+                missile.remove();
+                createMissileExplosion(endX, endY);
             }, 1500);
         }
 
+        // 创建导弹爆炸效果
+        function createMissileExplosion(x, y) {
+            // 爆炸中心
+            const explosion = document.createElement('div');
+            explosion.className = 'missile-explosion';
+            explosion.style.left = `${x}px`;
+            explosion.style.top = `${y}px`;
+            explosion.style.width = '120px';
+            explosion.style.height = '120px';
+            document.body.appendChild(explosion);
+            
+            // 冲击波
+            const shockwave = document.createElement('div');
+            shockwave.className = 'explosion-shockwave';
+            shockwave.style.left = `${x}px`;
+            shockwave.style.top = `${y}px`;
+            shockwave.style.width = '60px';
+            shockwave.style.height = '60px';
+            document.body.appendChild(shockwave);
+            
+            // 爆炸碎片
+            createExplosionShrapnel(x, y, 60);
+            
+            // 移除元素
+            setTimeout(() => {
+                explosion.remove();
+                shockwave.remove();
+            }, 2000);
+        }
+
         // 创建爆炸碎片
-        function createShrapnel(x, y, count) {
+        function createExplosionShrapnel(x, y, count) {
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     const shrapnel = document.createElement('div');
-                    shrapnel.className = 'shrapnel';
+                    shrapnel.className = 'explosion-shrapnel';
                     
                     // 随机方向
                     const angle = Math.random() * Math.PI * 2;
-                    const distance = 50 + Math.random() * 150;
+                    const distance = 80 + Math.random() * 200;
                     
                     shrapnel.style.left = `${x}px`;
                     shrapnel.style.top = `${y}px`;
@@ -225,7 +315,7 @@
                     shrapnel.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
                     
                     // 随机大小
-                    const size = 3 + Math.random() * 5;
+                    const size = 4 + Math.random() * 8;
                     shrapnel.style.width = `${size}px`;
                     shrapnel.style.height = `${size}px`;
                     
@@ -237,10 +327,10 @@
                     
                     document.body.appendChild(shrapnel);
                     
-                    // 动画结束后移除
+                    // 移除碎片
                     setTimeout(() => {
                         shrapnel.remove();
-                    }, 1000);
+                    }, 1500);
                 }, i * 20);
             }
         }
@@ -248,13 +338,14 @@
         // 初始化特效
         function initEffects() {
             // 清除现有特效
-            document.querySelectorAll('.grenade-blast, .shrapnel, .shockwave').forEach(el => el.remove());
+            document.querySelectorAll('.missile, .missile-explosion, .explosion-shrapnel, .explosion-shockwave')
+                .forEach(el => el.remove());
             
-            // 创建初始爆炸
-            createGrenadeExplosion();
+            // 发射导弹
+            launchMissile();
             
-            // 设置定时爆炸
-            setInterval(createGrenadeExplosion, 3000);
+            // 设置导弹发射间隔
+            setInterval(launchMissile, 3500);
         }
 
         // 页面加载和窗口大小改变时初始化特效
