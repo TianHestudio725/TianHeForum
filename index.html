@@ -2,62 +2,61 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>天禾论坛</title>
     <style>
         body {
-            font-family: 'Microsoft JhengHei', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .logo-container {
-            margin: 50px 0;
+            font-family: Arial;
             text-align: center;
+            margin: 0;
+            padding: 20px;
+            background: #f0f0f0;
         }
-        .tianhe-logo {
-            height: 100px;
-            margin-bottom: 20px;
+        .logo {
+            margin: 30px auto;
+            display: block;
+            border: 1px solid red; /* 调试边框 */
         }
-        .wott-logo {
-            height: 80px;
-        }
+        #tianhe-logo { height: 100px; }
+        #wott-logo { height: 80px; }
         .announcement {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            background: white;
             padding: 20px;
             max-width: 500px;
-            width: 90%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .footer {
-            margin-top: auto;
-            padding: 20px;
-            color: #666;
-            font-size: 14px;
+            margin: 30px auto;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="logo-container">
-        <!-- 修改了图片文件名以匹配实际文件 -->
-        <img src="天禾工作室官方logo.png" alt="天禾工作室" class="tianhe-logo">
-        <img src="WOTT官方logo.png" alt="WOTT游戏" class="wott-logo">
-    </div>
 
-    <div class="announcement">
-        <h2>最新公告</h2>
-        <p>本论坛正在大更新中，请多加留意公告</p>
-    </div>
+<!-- 使用绝对路径确保一定能找到图片 -->
+<img id="tianhe-logo" class="logo" 
+     src="./天禾工作室官方logo.png" 
+     alt="天禾工作室"
+     onerror="this.src='https://via.placeholder.com/200x100?text=天禾LOGO加载失败'">
 
-    <div class="footer">
-        ©2025 天禾工作室
-    </div>
+<img id="wott-logo" class="logo" 
+     src="./WOTT官方logo.png" 
+     alt="WOTT游戏"
+     onerror="this.src='https://via.placeholder.com/200x80?text=WOTT+LOGO加载失败'">
+
+<div class="announcement">
+    <h2>最新公告</h2>
+    <p>本论坛正在大更新中，请多加留意公告</p>
+</div>
+
+<script>
+// 自动检测图片是否加载成功
+window.addEventListener('load', function() {
+    const logos = document.querySelectorAll('.logo');
+    logos.forEach(logo => {
+        if(!logo.complete || logo.naturalWidth === 0) {
+            console.error('图片加载失败:', logo.src);
+            logo.style.border = '2px dashed red';
+        }
+    });
+});
+</script>
+
 </body>
 </html>
