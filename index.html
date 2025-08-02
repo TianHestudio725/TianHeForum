@@ -20,34 +20,52 @@
                 linear-gradient(rgba(50, 10, 0, 0.2), rgba(50, 10, 0, 0.2));
         }
 
-        /* 导弹尾焰 */
+        /* 导弹本体 */
         .missile {
             position: fixed;
             pointer-events: none;
             z-index: 0;
-            width: 60px;
-            height: 20px;
+            width: 40px;
+            height: 15px;
             background: linear-gradient(to right, 
-                rgba(150, 150, 150, 0.8), 
-                transparent);
-            border-radius: 50%;
+                #888 0%, 
+                #aaa 50%, 
+                #ccc 100%);
+            border-radius: 10px 5px 5px 10px;
             transform: rotate(var(--angle));
-            animation: missile-fly 1.5s linear forwards;
+            animation: missile-fly 2s linear forwards;
+            box-shadow: 0 0 10px rgba(255, 100, 0, 0.5);
         }
 
+        /* 导弹尾焰 */
         .missile::after {
             content: '';
             position: absolute;
-            right: -15px;
-            top: 5px;
-            width: 30px;
+            right: -25px;
+            top: 2px;
+            width: 40px;
             height: 10px;
             background: linear-gradient(to right, 
                 rgba(255, 100, 0, 0.9), 
-                rgba(255, 200, 0, 0.8));
-            border-radius: 50%;
+                rgba(255, 200, 0, 0.8),
+                transparent);
+            border-radius: 0 5px 5px 0;
             filter: blur(3px);
             animation: missile-fire 0.1s infinite alternate;
+        }
+
+        /* 导弹飞行轨迹 */
+        .missile-trail {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 150, 0, 0.6);
+            filter: blur(1px);
+            transform: translate(var(--x), var(--y));
+            animation: trail-fade 1s linear forwards;
         }
 
         @keyframes missile-fly {
@@ -58,8 +76,13 @@
         }
 
         @keyframes missile-fire {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.2); }
+            0% { transform: scaleX(1); opacity: 0.8; }
+            100% { transform: scaleX(1.3); opacity: 1; }
+        }
+
+        @keyframes trail-fade {
+            0% { width: 5px; height: 5px; opacity: 0.8; }
+            100% { width: 10px; height: 10px; opacity: 0; }
         }
 
         /* 导弹爆炸效果 */
@@ -75,14 +98,8 @@
                 rgba(255, 100, 0, 0.8) 40%, 
                 rgba(200, 30, 0, 0.6) 70%, 
                 transparent 90%);
-            box-shadow: 0 0 80px rgba(255, 100, 0, 0.8);
+            box-shadow: 0 0 100px rgba(255, 100, 0, 0.8);
             animation: missile-explode 1s ease-out forwards;
-        }
-
-        @keyframes missile-explode {
-            0% { transform: scale(0); opacity: 0; }
-            20% { transform: scale(1.8); opacity: 1; }
-            100% { transform: scale(3.5); opacity: 0; }
         }
 
         /* 爆炸碎片 */
@@ -101,11 +118,6 @@
             animation: shrapnel-fly 1.5s linear forwards;
         }
 
-        @keyframes shrapnel-fly {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)) scale(0.5); opacity: 0; }
-        }
-
         /* 冲击波 */
         .explosion-shockwave {
             position: fixed;
@@ -118,9 +130,20 @@
             animation: shockwave-expand 2s ease-out forwards;
         }
 
+        @keyframes missile-explode {
+            0% { transform: scale(0); opacity: 0; }
+            20% { transform: scale(2); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+
+        @keyframes shrapnel-fly {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0.5); opacity: 0; }
+        }
+
         @keyframes shockwave-expand {
             0% { transform: scale(0); opacity: 0.8; }
-            100% { transform: scale(5); opacity: 0; }
+            100% { transform: scale(6); opacity: 0; }
         }
 
         /* 内容容器 */
@@ -227,18 +250,18 @@
             switch(side) {
                 case 0: // 上边
                     startX = Math.random() * window.innerWidth;
-                    startY = -50;
+                    startY = -30;
                     break;
                 case 1: // 右边
-                    startX = window.innerWidth + 50;
+                    startX = window.innerWidth + 30;
                     startY = Math.random() * window.innerHeight;
                     break;
                 case 2: // 下边
                     startX = Math.random() * window.innerWidth;
-                    startY = window.innerHeight + 50;
+                    startY = window.innerHeight + 30;
                     break;
                 case 3: // 左边
-                    startX = -50;
+                    startX = -30;
                     startY = Math.random() * window.innerHeight;
                     break;
             }
@@ -261,11 +284,39 @@
             
             document.body.appendChild(missile);
             
+            // 创建导弹尾迹
+            createMissileTrail(startX, startY, endX, endY, angle);
+            
             // 导弹到达目标时爆炸
             setTimeout(() => {
                 missile.remove();
                 createMissileExplosion(endX, endY);
-            }, 1500);
+            }, 2000);
+        }
+
+        // 创建导弹尾迹
+        function createMissileTrail(startX, startY, endX, endY, angle) {
+            const steps = 20;
+            const duration = 2000; // 与导弹飞行时间一致
+            
+            for (let i = 0; i < steps; i++) {
+                setTimeout(() => {
+                    const progress = i / steps;
+                    const x = startX + (endX - startX) * progress;
+                    const y = startY + (endY - startY) * progress;
+                    
+                    const trail = document.createElement('div');
+                    trail.className = 'missile-trail';
+                    trail.style.setProperty('--x', `${x}px`);
+                    trail.style.setProperty('--y', `${y}px`);
+                    document.body.appendChild(trail);
+                    
+                    // 尾迹自动消失
+                    setTimeout(() => {
+                        trail.remove();
+                    }, 1000);
+                }, i * (duration / steps));
+            }
         }
 
         // 创建导弹爆炸效果
@@ -275,8 +326,8 @@
             explosion.className = 'missile-explosion';
             explosion.style.left = `${x}px`;
             explosion.style.top = `${y}px`;
-            explosion.style.width = '120px';
-            explosion.style.height = '120px';
+            explosion.style.width = '150px';
+            explosion.style.height = '150px';
             document.body.appendChild(explosion);
             
             // 冲击波
@@ -284,12 +335,12 @@
             shockwave.className = 'explosion-shockwave';
             shockwave.style.left = `${x}px`;
             shockwave.style.top = `${y}px`;
-            shockwave.style.width = '60px';
-            shockwave.style.height = '60px';
+            shockwave.style.width = '80px';
+            shockwave.style.height = '80px';
             document.body.appendChild(shockwave);
             
             // 爆炸碎片
-            createExplosionShrapnel(x, y, 60);
+            createExplosionShrapnel(x, y, 80);
             
             // 移除元素
             setTimeout(() => {
@@ -307,7 +358,7 @@
                     
                     // 随机方向
                     const angle = Math.random() * Math.PI * 2;
-                    const distance = 80 + Math.random() * 200;
+                    const distance = 100 + Math.random() * 200;
                     
                     shrapnel.style.left = `${x}px`;
                     shrapnel.style.top = `${y}px`;
@@ -338,14 +389,14 @@
         // 初始化特效
         function initEffects() {
             // 清除现有特效
-            document.querySelectorAll('.missile, .missile-explosion, .explosion-shrapnel, .explosion-shockwave')
+            document.querySelectorAll('.missile, .missile-trail, .missile-explosion, .explosion-shrapnel, .explosion-shockwave')
                 .forEach(el => el.remove());
             
-            // 发射导弹
+            // 立即发射第一枚导弹
             launchMissile();
             
             // 设置导弹发射间隔
-            setInterval(launchMissile, 3500);
+            setInterval(launchMissile, 4000);
         }
 
         // 页面加载和窗口大小改变时初始化特效
