@@ -1,53 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>WOTT 背景音樂播放器</title>
-  <style>
-    body {
-      margin: 0;
-      background: transparent;
-    }
-    #mute-toggle {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      font-size: 24px;
-      background: rgba(255, 255, 255, 0.3);
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      padding: 5px 10px;
-    }
-  </style>
-</head>
-<body>
-  <!-- 靜音按鈕 -->
-  <button id="mute-toggle">🔊</button>
+<div id="audio-controls" style="position: fixed; bottom: 10px; right: 10px; z-index: 9999;">
+  <button id="muteButton" style="padding: 8px 16px; background-color: black; color: white; border: none; cursor: pointer;">🔇 Mute</button>
+</div>
 
-  <!-- 背景音樂播放器 -->
-  <audio id="bgm-player" autoplay loop>
-    <source src="bgm.mp3" type="audio/mpeg">
-    您的瀏覽器不支援 audio 元素。
-  </audio>
-
-  <script>
-    const player = document.getElementById('bgm-player');
-    const button = document.getElementById('mute-toggle');
-
-    // 有些瀏覽器禁止自動播放，必須用 JS 主動播放
-    window.addEventListener('DOMContentLoaded', () => {
-      player.play().catch(() => {
-        console.log("需使用者互動才可播放");
-      });
+<script>
+  if (!window.bgmAudio) {
+    window.bgmAudio = new Audio('bgm.mp3');
+    window.bgmAudio.loop = true;
+    window.bgmAudio.volume = 1;
+    window.bgmAudio.play().catch(() => {
+      console.warn("Autoplay blocked. User must interact.");
     });
+  }
 
-    let muted = false;
-    button.addEventListener('click', () => {
-      muted = !muted;
-      player.muted = muted;
-      button.textContent = muted ? '🔇' : '🔊';
-    });
-  </script>
-</body>
-</html>
+  const muteButton = document.getElementById('muteButton');
+  function updateButtonText() {
+    muteButton.textContent = window.bgmAudio.muted ? '🔈 Unmute' : '🔇 Mute';
+  }
+
+  muteButton.addEventListener('click', () => {
+    window.bgmAudio.muted = !window.bgmAudio.muted;
+    updateButtonText();
+  });
+
+  updateButtonText();
+</script>
