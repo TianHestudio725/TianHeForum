@@ -2,13 +2,126 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>關於我們</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>關於我們 | About Us - 天禾論壇</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header, footer {
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    nav {
+      background-color: #333;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+    nav a:hover {
+      background-color: #575757;
+    }
+    .container {
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+      background: white;
+    }
+    .lang-switch {
+      text-align: right;
+      padding: 10px 20px;
+      background-color: #eee;
+    }
+    .lang-switch button {
+      margin-left: 10px;
+    }
+    /* 靜音按鈕樣式 */
+    #mute-btn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 9999;
+      padding: 10px 15px;
+      background: #222;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #mute-btn:hover {
+      background: #444;
+    }
+  </style>
 </head>
-<body style="margin: 0; padding: 0; font-family: sans-serif; background-color: white; color: black; text-align: center;">
-  <h1 style="margin-top: 100px;">關於天禾工作室</h1>
-  <p>我們是來自天禾的遊戲開發團隊，致力於打造高品質跨平台射擊遊戲。</p>
+<body>
+  <!-- 靜音按鈕 -->
+  <button id="mute-btn">🔊</button>
+  <!-- 背景音樂 -->
+  <audio id="bgm" src="bgm.mp3" autoplay loop></audio>
 
-  <!-- 嵌入播放器 -->
-  <iframe src="player.html" width="0" height="0" style="border: none;"></iframe>
+  <header>
+    <img src="天禾工作室官方logo.png" alt="天禾 LOGO" style="max-height: 100px;">
+    <h1 id="title">關於我們</h1>
+  </header>
+
+  <div class="lang-switch">
+    <strong>語言 / Language:</strong>
+    <button onclick="setLanguage('zh')">中文</button>
+    <button onclick="setLanguage('en')">English</button>
+  </div>
+
+  <nav>
+    <a href="index.html">主頁 / Home</a>
+    <a href="about.html">關於我們 / About</a>
+    <a href="wott.html">《WOTT》</a>
+  </nav>
+
+  <div class="container">
+    <div id="zh">
+      <h2>我們是誰</h2>
+      <p>天禾工作室目前是一人獨立開發團隊，致力於製作具備次世代體驗的手機遊戲。</p>
+      <p>我們的目標是創建一個真正屬於玩家的互動平台與遊戲宇宙。</p>
+    </div>
+    <div id="en" style="display: none;">
+      <h2>Who We Are</h2>
+      <p>Tian He Studio is currently a one-person indie game development studio dedicated to creating next-gen mobile gaming experiences.</p>
+      <p>Our goal is to build a truly interactive platform and game universe for players.</p>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 天禾工作室 | Tian He Studio
+  </footer>
+
+  <script>
+    function setLanguage(lang) {
+      document.getElementById('zh').style.display = lang === 'zh' ? 'block' : 'none';
+      document.getElementById('en').style.display = lang === 'en' ? 'block' : 'none';
+      document.getElementById('title').textContent = lang === 'zh' ? '關於我們' : 'About Us';
+    }
+
+    const muteBtn = document.getElementById("mute-btn");
+    const bgm = document.getElementById("bgm");
+
+    muteBtn.onclick = () => {
+      if (bgm.muted) {
+        bgm.muted = false;
+        muteBtn.textContent = "🔊";
+      } else {
+        bgm.muted = true;
+        muteBtn.textContent = "🔇";
+      }
+    };
+  </script>
 </body>
 </html>
